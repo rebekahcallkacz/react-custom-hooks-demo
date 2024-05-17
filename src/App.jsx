@@ -4,8 +4,8 @@ import { fetchData, searchCollection } from "./network";
 
 function App() {
   const [isFetchingSearchResults, setIsFetchingSearchResults] = useState(false);
+    // Store search results
   const [searchResults, setSearchResults] = useState();
-  // Store search results
   const [searchResultsError, setSearchResultsError] = useState();
   // Store link to further info about selected artwork
   const [selectedArtworkApiLink, setSelectedArtworkApiLink] = useState();

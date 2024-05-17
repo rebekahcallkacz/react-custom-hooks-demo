@@ -11,7 +11,7 @@
 (in no particular order)
 
 - Modify the custom hook useFetch so that it also returns a variable (boolean) which indicates whether or not the data is loading and a variable (string) that stores the error message if it exists.
-- Use this hook to fetch the artwork data when the "More Info" button is clicked.
+- Use this hook in the remaining useEffect block
 
 ## Additional Practice
 

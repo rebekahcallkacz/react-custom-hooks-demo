@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { useFetch } from "./hooks";
 import { fetchData, searchCollection } from "./network";
 
 function App() {
   const [isFetchingSearchResults, setIsFetchingSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState();
   const [searchResultsError, setSearchResultsError] = useState();
-  const [selectedArtwork, setSelectedArtwork] = useState();
+  const {data: selectedArtwork, setPath: setSelectedArtworkApiLink} = useFetch();
 
   const queryTerm = "monet";
 
@@ -41,7 +42,7 @@ function App() {
   const handleMoreInfoButtonClick = (event) => {
     // Documentation for this API request: https://api.artic.edu/docs/#get-artworks-id
     const clickedArtworkApiLink = event.target.value;
-    fetchData(clickedArtworkApiLink).then((data) => setSelectedArtwork(data)).catch((error) => console.log(error));
+    setSelectedArtworkApiLink(clickedArtworkApiLink)
   };
 
   if (isFetchingSearchResults) return <h1>Loading...</h1>

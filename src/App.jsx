@@ -5,20 +5,25 @@ import { fetchData, searchCollection } from "./network";
 function App() {
   const [isFetchingSearchResults, setIsFetchingSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState();
+  // Store search results
   const [searchResultsError, setSearchResultsError] = useState();
+  // Store link to further info about selected artwork
+  const [selectedArtworkApiLink, setSelectedArtworkApiLink] = useState();
+  // Store further data about the selected artwork
   const [selectedArtwork, setSelectedArtwork] = useState();
 
-  const queryTerm = "monet";
+  const searchTerm = "monet";
 
+  // Update the search results when the query term changes
   useEffect(() => {
     // Clear out former data
     setIsFetchingSearchResults(true);
     setSearchResults(undefined);
+    setSelectedArtworkApiLink(undefined);
     setSearchResultsError(false);
 
-
     // Fetch data
-    searchCollection(queryTerm)
+    searchCollection(searchTerm)
       .then((data) =>
         {
           // Update because data is successfully returned
@@ -36,12 +41,19 @@ function App() {
         }
 
       );
-  }, [queryTerm]);
+  }, [searchTerm]);
+
+  // Update the selected artwork info when the link changes
+  useEffect(() => {
+    if (selectedArtworkApiLink) {
+      fetchData(selectedArtworkApiLink).then((data) => setSelectedArtwork(data)).catch((error) => console.log(error));
+    }
+  }, [selectedArtworkApiLink])
 
   const handleMoreInfoButtonClick = (event) => {
     // Documentation for this API request: https://api.artic.edu/docs/#get-artworks-id
     const clickedArtworkApiLink = event.target.value;
-    fetchData(clickedArtworkApiLink).then((data) => setSelectedArtwork(data)).catch((error) => console.log(error));
+    setSelectedArtworkApiLink(clickedArtworkApiLink);
   };
 
   if (isFetchingSearchResults) return <h1>Loading...</h1>
@@ -49,7 +61,7 @@ function App() {
   return (
     <>
       <div>
-      <h1>{`Search Results for: ${queryTerm}`}</h1>
+      <h1>{`Search Results for: ${searchTerm}`}</h1>
         <div>
         {searchResults &&
           searchResults.map((artwork) => (

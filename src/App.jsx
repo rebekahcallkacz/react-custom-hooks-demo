@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { useFetch } from "./hooks";
-import { fetchData, searchCollection } from "./network";
+import { searchCollection } from "./network";
 
 function App() {
   const [isFetchingSearchResults, setIsFetchingSearchResults] = useState(false);
